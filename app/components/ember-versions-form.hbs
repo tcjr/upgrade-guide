@@ -10,13 +10,17 @@
       id="from-version"
       {{on "input" this.updateFromVersion}}
     >
-      {{#each this.versions as |version|}}
-        <option
-          selected={{eq version this.fromVersion}}
-          value={{version}}
-        >
-          {{version}}
-        </option>
+      {{#each this.groupedVersions as |versionGroup|}}
+        <optgroup label={{concat "v" versionGroup.major ".x"}}>
+          {{#each versionGroup.versions as |version|}}
+            <option
+              selected={{eq version this.fromVersion}}
+              value={{version}}
+            >
+              {{version}}
+            </option>
+          {{/each}}
+        </optgroup>
       {{/each}}
     </select>
   </div>
@@ -29,13 +33,17 @@
       id="to-version"
       {{on "input" this.updateToVersion}}
     >
-      {{#each this.versions as |version|}}
-        <option
-          selected={{eq version this.toVersion}}
-          value={{version}}
-        >
-          {{version}}
-        </option>
+      {{#each this.groupedVersions as |versionGroup|}}
+        <optgroup label={{concat "v" versionGroup.major ".x"}}>
+          {{#each versionGroup.versions as |version|}}
+            <option
+              selected={{eq version this.toVersion}}
+              value={{version}}
+            >
+              {{version}}
+            </option>
+          {{/each}}
+        </optgroup>
       {{/each}}
     </select>
   </div>
