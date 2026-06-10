@@ -3,6 +3,17 @@ import { click, currentURL, findAll, visit } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 
+// When a new version is added, update these numbers
+const LATEST_DELTAS = {
+  version: '7.0',
+  emberNewFeatures: 50,
+  emberDeprecations: 36,
+  emberDataNewFeatures: 21,
+  emberDataDeprecations: 18,
+  emberCLINewFeatures: 96,
+  emberCLIDeprecations: 14,
+};
+
 module('Acceptance | changes', function (hooks) {
   setupApplicationTest(hooks);
 
@@ -16,8 +27,8 @@ module('Acceptance | changes', function (hooks) {
 
     assert.strictEqual(
       newFeaturesInEmberJS.length,
-      43,
-      'We see 43 new features that occurred in Ember.js since version 3.15',
+      LATEST_DELTAS.emberNewFeatures,
+      `We see ${LATEST_DELTAS.emberNewFeatures} new features that occurred in Ember.js since version 3.15`,
     );
 
     // Check deprecations in Ember.js
@@ -27,8 +38,8 @@ module('Acceptance | changes', function (hooks) {
 
     assert.strictEqual(
       deprecationsInEmberJS.length,
-      33,
-      'We see 33 deprecations that occurred in Ember.js since version 3.15',
+      LATEST_DELTAS.emberDeprecations,
+      `We see ${LATEST_DELTAS.emberDeprecations} deprecations that occurred in Ember.js since version 3.15`,
     );
 
     // Check new features in Ember Data
@@ -38,8 +49,8 @@ module('Acceptance | changes', function (hooks) {
 
     assert.strictEqual(
       newFeaturesInEmberData.length,
-      21,
-      'We see 21 new feature that occurred in Ember Data since version 3.15',
+      LATEST_DELTAS.emberDataNewFeatures,
+      `We see ${LATEST_DELTAS.emberDataNewFeatures} new feature that occurred in Ember Data since version 3.15`,
     );
 
     // Check deprecations in Ember Data
@@ -49,8 +60,8 @@ module('Acceptance | changes', function (hooks) {
 
     assert.strictEqual(
       deprecationsInEmberData.length,
-      18,
-      'We see 18 deprecations that occurred in Ember Data since version 3.15',
+      LATEST_DELTAS.emberDataDeprecations,
+      `We see ${LATEST_DELTAS.emberDataDeprecations} deprecations that occurred in Ember Data since version 3.15`,
     );
 
     // Check new features in Ember CLI
@@ -60,8 +71,8 @@ module('Acceptance | changes', function (hooks) {
 
     assert.strictEqual(
       newFeaturesInEmberCLI.length,
-      74,
-      'We see 74 new features that occurred in Ember CLI since version 3.15',
+      LATEST_DELTAS.emberCLINewFeatures,
+      `We see ${LATEST_DELTAS.emberCLINewFeatures} new features that occurred in Ember CLI since version 3.15`,
     );
 
     // Check deprecations in Ember CLI
@@ -71,8 +82,8 @@ module('Acceptance | changes', function (hooks) {
 
     assert.strictEqual(
       deprecationsInEmberCLI.length,
-      10,
-      'We see 10 deprecations that occurred in Ember CLI since version 3.15',
+      LATEST_DELTAS.emberCLIDeprecations,
+      `We see ${LATEST_DELTAS.emberCLIDeprecations} deprecations that occurred in Ember CLI since version 3.15`,
     );
   });
 

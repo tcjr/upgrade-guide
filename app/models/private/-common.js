@@ -5,10 +5,12 @@ export default class CommonModel extends Model {
   @attr changes;
 
   get features() {
-    return (this.changes || []).filterBy('feature');
+    return (this.changes || []).filter((change) => Boolean(change?.feature));
   }
 
   get deprecations() {
-    return (this.changes || []).filterBy('deprecation');
+    return (this.changes || []).filter((change) =>
+      Boolean(change?.deprecation),
+    );
   }
 }

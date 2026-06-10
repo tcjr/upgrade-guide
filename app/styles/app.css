@@ -1,1 +1,22 @@
 /* Ember supports plain CSS out of the box. More info: https://cli.emberjs.com/release/advanced-use/stylesheets/ */
+
+/* 
+This project is using an old version of the styleguide, so these highly-targeted rules are a bridge
+to meet accessibility guidelines until we upgrade to a compliant styleguide.
+*/
+
+footer.es-footer {
+  .footer-help {
+    p {
+      a {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+main > section.container > form {
+  button.es-button {
+    background-color: #db3122;
+  }
+}
