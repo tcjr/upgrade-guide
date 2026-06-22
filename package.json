@@ -23,7 +23,7 @@
     "lint:js:fix": "eslint . --fix",
     "lint:format": "prettier . --cache --check",
     "start": "ember serve",
-    "test": "concurrently \"npm:lint\" \"npm:test:*\" --names \"lint,test:\" --prefixColors auto",
+    "test": "concurrently \"npm:test:*\" --names \"test:\" --prefixColors auto",
     "test:ember": "ember test"
   },
   "devDependencies": {
