@@ -3,12 +3,12 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { VERSIONS } from 'upgrade-guide/utils/ember-versions';
 import { compare } from 'compare-versions';
-
-// Group the versions by major so we can display option groups.
 import { on } from '@ember/modifier';
 import { concat } from '@ember/helper';
 import eq from 'ember-truth-helpers/helpers/equal';
 import EsButton from 'ember-styleguide/components/es-button';
+
+// Group the versions by major so we can display option groups.
 const GROUPED_VERSIONS = VERSIONS.reduce((acc, version) => {
   const major = version.split('.')[0];
   let group = acc.find((g) => g.major === major);
