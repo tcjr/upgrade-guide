@@ -8,6 +8,16 @@
 /coverage/
 !.*
 .*/
+pnpm-lock.yaml
+README.md
+jsconfig.json
+/config/ember-cli-update.json
+/app/**/*.hbs
+/app/index.html
+/tests/index.html
 
 # ember-try
 /.node_modules.ember-try/
+
+# source markdown
+/source/
