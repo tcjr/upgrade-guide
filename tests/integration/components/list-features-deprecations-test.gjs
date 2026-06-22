@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { findAll, render } from '@ember/test-helpers';
-import { hbs } from 'ember-cli-htmlbars';
+import ListFeaturesDeprecations from 'upgrade-guide/components/list-features-deprecations';
 
 module(
   'Integration | Component | list-features-deprecations',
@@ -70,17 +70,21 @@ module(
     });
 
     test('only shows changes that occurred between fromVersion and toVersion (1)', async function (assert) {
+      const self = this;
+
       // Case 1: All changes occurred between fromVersion and toVersion
       this.fromVersion = '2.17';
       this.toVersion = '3.3';
 
-      await render(hbs`
-      <ListFeaturesDeprecations
-        @allChangeLogs={{this.allChangeLogs}}
-        @fromVersion={{this.fromVersion}}
-        @toVersion={{this.toVersion}}
-      />
-    `);
+      await render(
+        <template>
+          <ListFeaturesDeprecations
+            @allChangeLogs={{self.allChangeLogs}}
+            @fromVersion={{self.fromVersion}}
+            @toVersion={{self.toVersion}}
+          />
+        </template>,
+      );
 
       // Check features
       const features = findAll('[data-test-feature]');
@@ -158,17 +162,21 @@ module(
     });
 
     test('only shows changes that occurred between fromVersion and toVersion (2)', async function (assert) {
+      const self = this;
+
       // Case 2: Some changes occurred before fromVersion
       this.fromVersion = '3.1';
       this.toVersion = '3.3';
 
-      await render(hbs`
-      <ListFeaturesDeprecations
-        @allChangeLogs={{this.allChangeLogs}}
-        @fromVersion={{this.fromVersion}}
-        @toVersion={{this.toVersion}}
-      />
-    `);
+      await render(
+        <template>
+          <ListFeaturesDeprecations
+            @allChangeLogs={{self.allChangeLogs}}
+            @fromVersion={{self.fromVersion}}
+            @toVersion={{self.toVersion}}
+          />
+        </template>,
+      );
 
       // Check features
       const features = findAll('[data-test-feature]');
@@ -204,17 +212,21 @@ module(
     });
 
     test('only shows changes that occurred between fromVersion and toVersion (3)', async function (assert) {
+      const self = this;
+
       // Case 3: Some changes occurred after toVersion
       this.fromVersion = '2.17';
       this.toVersion = '3.1';
 
-      await render(hbs`
-      <ListFeaturesDeprecations
-        @allChangeLogs={{this.allChangeLogs}}
-        @fromVersion={{this.fromVersion}}
-        @toVersion={{this.toVersion}}
-      />
-    `);
+      await render(
+        <template>
+          <ListFeaturesDeprecations
+            @allChangeLogs={{self.allChangeLogs}}
+            @fromVersion={{self.fromVersion}}
+            @toVersion={{self.toVersion}}
+          />
+        </template>,
+      );
 
       // Check features
       const features = findAll('[data-test-feature]');
@@ -278,17 +290,21 @@ module(
     });
 
     test('only shows changes that occurred between fromVersion and toVersion (4)', async function (assert) {
+      const self = this;
+
       // Case 4: No changes occurred between fromVersion and toVersion
       this.fromVersion = '3.3';
       this.toVersion = '3.8';
 
-      await render(hbs`
-      <ListFeaturesDeprecations
-        @allChangeLogs={{this.allChangeLogs}}
-        @fromVersion={{this.fromVersion}}
-        @toVersion={{this.toVersion}}
-      />
-    `);
+      await render(
+        <template>
+          <ListFeaturesDeprecations
+            @allChangeLogs={{self.allChangeLogs}}
+            @fromVersion={{self.fromVersion}}
+            @toVersion={{self.toVersion}}
+          />
+        </template>,
+      );
 
       // Check features
       const features = findAll('[data-test-feature]');

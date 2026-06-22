@@ -1,19 +1,19 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
-import { hbs } from 'ember-cli-htmlbars';
+import CliUpdateCommands from 'upgrade-guide/components/cli-update-commands';
 
 module('Integration | Component | cli-update-commands', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it checks if the right command is displayed', async function (assert) {
+    const self = this;
+
     this.toVersion = 3.14;
 
-    await render(hbs`
-      <CliUpdateCommands
-        @toVersion={{this.toVersion}}
-      />
-    `);
+    await render(
+      <template><CliUpdateCommands @toVersion={{self.toVersion}} /></template>,
+    );
 
     assert
       .dom('[data-test-command="Ember CLI Update"]')
