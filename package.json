@@ -92,5 +92,9 @@
     "paths": [
       "lib/content-generator"
     ]
+  },
+  "exports": {
+    "./tests/*": "./tests/*",
+    "./*": "./app/*"
   }
 }
