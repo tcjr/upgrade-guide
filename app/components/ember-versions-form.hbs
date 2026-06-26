@@ -1,4 +1,5 @@
 <form
+  class="ember-versions-form"
   data-test-form="Ember Versions"
   {{on "submit" this.submitForm}}
 >
@@ -12,6 +13,7 @@
     >
       {{#each this.groupedVersions as |versionGroup|}}
         <optgroup label={{concat "v" versionGroup.major ".x"}}>
+          <legend>{{versionGroup.major}}.x Versions</legend>
           {{#each versionGroup.versions as |version|}}
             <option
               selected={{eq version this.fromVersion}}
@@ -35,6 +37,7 @@
     >
       {{#each this.groupedVersions as |versionGroup|}}
         <optgroup label={{concat "v" versionGroup.major ".x"}}>
+          <legend>{{versionGroup.major}}.x Versions</legend>
           {{#each versionGroup.versions as |version|}}
             <option
               selected={{eq version this.toVersion}}
