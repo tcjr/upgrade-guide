@@ -11,6 +11,11 @@
 /pnpm-lock.yaml
 ember-cli-update.json
 *.html
+jsconfig.json
+README.md
 
 # ember-try
 /.node_modules.ember-try/
+
+# source markdown
+/source/
