@@ -1,4 +1,8 @@
 <template>
+  <h2>
+    From version
+    {{@fromVersion}}:
+  </h2>
   <code data-test-command="Ember CLI Update">
     ember-cli-update --to
     {{@toVersion}}

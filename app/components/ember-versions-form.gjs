@@ -1,39 +1,45 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { VERSIONS } from 'upgrade-guide/utils/ember-versions';
+import {
+  VERSIONS,
+  GROUPED_VERSIONS,
+  isLegalVersion,
+  DEFAULT_FROM_VERSION,
+  DEFAULT_TO_VERSION,
+  areVersionsValid,
+} from 'upgrade-guide/utils/ember-versions';
 import { compare } from 'compare-versions';
 import { on } from '@ember/modifier';
 import { concat } from '@ember/helper';
 import eq from 'ember-truth-helpers/helpers/equal';
-import EsButton from 'ember-styleguide/components/es-button';
 import '../styles/ember-versions-form.css';
 
-// Group the versions by major so we can display option groups.
-const GROUPED_VERSIONS = VERSIONS.reduce((acc, version) => {
-  const major = version.split('.')[0];
-  let group = acc.find((g) => g.major === major);
-  if (!group) {
-    group = { major, versions: [] };
-    acc.push(group);
-  }
-  group.versions.push(version);
-  return acc;
-}, []);
-
 const isFromVersionInvalid = (version, toVersion) => {
-  return compare(version, toVersion, '>=');
+  return (
+    isLegalVersion(version) &&
+    isLegalVersion(toVersion) &&
+    compare(version, toVersion, '>=')
+  );
 };
 
 const isToVersionInvalid = (version, fromVersion) => {
-  return compare(version, fromVersion, '<=');
+  return (
+    isLegalVersion(version) &&
+    isLegalVersion(fromVersion) &&
+    compare(version, fromVersion, '<=')
+  );
 };
 
 export default class EmberVersionsFormComponent extends Component {
   versions = VERSIONS;
   groupedVersions = GROUPED_VERSIONS;
-  @tracked fromVersion = '3.15';
-  @tracked toVersion = VERSIONS[VERSIONS.length - 1];
+  @tracked fromVersion = isLegalVersion(this.args.from)
+    ? this.args.from
+    : DEFAULT_FROM_VERSION;
+  @tracked toVersion = isLegalVersion(this.args.to)
+    ? this.args.to
+    : DEFAULT_TO_VERSION;
 
   @action submitForm(event) {
     event.preventDefault();
@@ -48,31 +54,40 @@ export default class EmberVersionsFormComponent extends Component {
     }
   }
 
-  get areVersionsValid() {
-    const { fromVersion, toVersion } = this;
-
-    if (!fromVersion || !toVersion) {
-      return true;
-    }
-
-    return compare(fromVersion, toVersion, '<');
-  }
-
   @action updateFromVersion(event) {
     this.fromVersion = event.target.value;
+    if (this.args.submitOnChange) {
+      this.#submitForm(this.fromVersion, this.toVersion);
+    }
   }
 
   @action updateToVersion(event) {
     this.toVersion = event.target.value;
+    if (this.args.submitOnChange) {
+      this.#submitForm(this.fromVersion, this.toVersion);
+    }
   }
+
+  // NOTE: We do not validate valid combinations here. The UI discourages invalid combinations,
+  // but does not prevent them.
+  #submitForm = (from, to) => {
+    if (this.args.onSubmit) {
+      this.args.onSubmit({
+        fromVersion: from,
+        toVersion: to,
+      });
+    }
+  };
+
   <template>
     <form
       class="ember-versions-form"
       data-test-form="Ember Versions"
       {{on "submit" this.submitForm}}
     >
-      <div class="mb-3">
-        <label for="from-version">From version</label>
+      <div class="mb-3 form-inputs">
+        <span>Upgrading</span>
+        <label for="from-version">from version</label>
 
         <select
           data-test-select="From Version"
@@ -97,10 +112,8 @@ export default class EmberVersionsFormComponent extends Component {
             </optgroup>
           {{/each}}
         </select>
-      </div>
 
-      <div>
-        <label for="to-version">To version</label>
+        <label for="to-version">to version</label>
 
         <select
           data-test-select="To Version"
@@ -127,19 +140,25 @@ export default class EmberVersionsFormComponent extends Component {
         </select>
       </div>
 
-      <EsButton
-        @type="submit"
-        data-test-button="Find Changes"
-        disabled={{unless this.areVersionsValid true}}
-        @label="Find Changes"
-        class="mt-2"
-      />
-
-      {{#unless this.areVersionsValid}}
-        <div role="alert" class="well mt-2 p-2">
-          To version should be higher than From version
-        </div>
+      {{#unless @hideFindButton}}
+        <button
+          class="es-button mt-2"
+          data-test-button="Find Changes"
+          type="submit"
+          disabled={{unless
+            (areVersionsValid this.fromVersion this.toVersion)
+            true
+          }}
+        >
+          Find Changes
+        </button>
       {{/unless}}
+
     </form>
+    {{#unless (areVersionsValid this.fromVersion this.toVersion)}}
+      <div role="alert" class="well mt-2 p-2">
+        To version should be higher than From version
+      </div>
+    {{/unless}}
   </template>
 }

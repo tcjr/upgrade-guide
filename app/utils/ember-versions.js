@@ -1,3 +1,5 @@
+import { compare } from 'compare-versions';
+
 export const VERSIONS = Object.freeze([
   '0.13',
   '1.0.0-pre',
@@ -123,3 +125,31 @@ export const VERSIONS = Object.freeze([
   '6.12',
   '7.0',
 ]);
+
+export const DEFAULT_FROM_VERSION = '3.15';
+export const DEFAULT_TO_VERSION = VERSIONS[VERSIONS.length - 1];
+
+// Group the versions by major so we can display option groups.
+export const GROUPED_VERSIONS = VERSIONS.reduce((acc, version) => {
+  const major = version.split('.')[0];
+  let group = acc.find((g) => g.major === major);
+  if (!group) {
+    group = { major, versions: [] };
+    acc.push(group);
+  }
+  group.versions.push(version);
+  return acc;
+}, []);
+
+export const isLegalVersion = (version) => {
+  return VERSIONS.includes(version);
+};
+
+/** Utility to check that from/to combination is allowed. */
+export const areVersionsValid = (fromVersion, toVersion) => {
+  if (!fromVersion || !toVersion) {
+    return true;
+  }
+
+  return compare(fromVersion, toVersion, '<');
+};

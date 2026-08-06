@@ -29,3 +29,11 @@ main > section.container > form {
     }
   }
 }
+
+/*
+Utility classes
+*/
+
+.min-h-50vh {
+  min-height: 50vh;
+}

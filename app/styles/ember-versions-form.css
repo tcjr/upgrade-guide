@@ -1,7 +1,19 @@
 .ember-versions-form {
+  .form-inputs {
+    & > label,
+    & > span {
+      font-size: var(--font-size-xl);
+      line-height: var(--line-height-xl);
+      font-weight: var(--font-weight-2);
+    }
+  }
+
   /* Fallback styling for older browsers */
   select {
     appearance: auto;
+    margin-left: var(--spacing-1);
+    margin-right: var(--spacing-1);
+    vertical-align: inherit;
   }
 
   /* Progressive enhancement for modern browsers */
